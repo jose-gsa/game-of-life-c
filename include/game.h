@@ -1,0 +1,25 @@
+#ifndef GAME_H
+#define GAME_H
+
+#include <stdbool.h>
+
+#define MAX_HEIGHT 50
+#define MAX_WIDTH 50
+
+typedef struct {
+  int grid[MAX_HEIGHT][MAX_WIDTH];      // Actual grid
+  int next_grid[MAX_HEIGHT][MAX_WIDTH]; // buffer
+  int height;                           // real height of the actual window
+  int width;                            // real width of the actual window
+  bool is_running;                      // Control of the main loop
+  bool is_paused;                       // Pause control
+  int speed;                            // Simulation speed
+} GameState;
+
+void init_game(GameState *game);
+void process_input(GameState *game);
+void update_state(GameState *game);
+void render_game(GameState *game);
+void cleanup_game(GameState *game);
+
+#endif
