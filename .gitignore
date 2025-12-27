@@ -1,0 +1,16 @@
+# --- Build Artifacts ---
+/bin/
+/obj/
+*.o
+*.out
+game-of-life
+
+# --- Tooling & LSP ---
+compile_commands.json
+
+.cache/
+.clangd/
+.ccls-cache/
+
+# --- OS Files ---
+.DS_Store
