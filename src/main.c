@@ -1,22 +1,26 @@
+#include "game.h"
 #include <ncurses.h>
 
-/* Test the ncurses lib and makefile */
-
 int main() {
+  GameState game;
 
-  char letter;
+  // ncurses configuration and variables
+  init_game(&game);
 
-  initscr();
-  printw("Prees any key");
-  refresh();
+  // Main Game Loop
+  while (game.is_running) {
+    process_input(&game);
 
-  letter = getch();
-  clear();
-  printw("You pushed: %c", letter);
-  refresh();
+    if (!game.is_paused) {
+      update_state(&game);
+    }
 
-  getch();
-  endwin();
+    render_game(&game);
 
+    // framerate control
+    napms(game.speed);
+  }
+
+  cleanup_game(&game);
   return 0;
 }
