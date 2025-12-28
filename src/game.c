@@ -20,7 +20,38 @@ void init_game(GameState *game) {
 // No input for now
 void process_input(GameState *game) {}
 
-void update_state(GameState *game) {}
+void update_state(GameState *game) {
+
+  // Checks if the last positon has been reached
+  if (game->grid[game->height - 1][game->width - 1] == 1) {
+    game->is_running = FALSE;
+    return;
+  }
+
+  for (int i = 0; i < game->height; i++) {
+    for (int k = 0; k < game->width; k++) {
+      game->next_grid[i][k] = 0;
+    }
+  }
+
+  for (int y = 0; y < game->height; y++) {
+    for (int x = 0; x < game->width; x++) {
+      if (game->grid[y][x] == 1) {
+        if ((x + 1) < game->width) {
+          game->next_grid[y][x + 1] = 1;
+        } else if (y < game->height - 1) {
+          game->next_grid[y + 1][0] = 1;
+        }
+      }
+    }
+  }
+
+  for (int i = 0; i < game->height; i++) {
+    for (int k = 0; k < game->width; k++) {
+      game->grid[i][k] = game->next_grid[i][k];
+    }
+  }
+}
 
 void render_game(GameState *game) {}
 
