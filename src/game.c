@@ -24,7 +24,7 @@ void init_game(GameState *game) {
   game->width = MAX_WIDTH;
   game->is_running = TRUE;
   game->is_paused = FALSE;
-  game->speed = 1000; // This is 1 second
+  game->speed = 10; // This is for debuging
 }
 
 // No input for now
@@ -63,6 +63,17 @@ void update_state(GameState *game) {
   }
 }
 
-void render_game(GameState *game) {}
+void render_game(GameState *game) {
+  for (int i = 0; i < game->height; i++) {
+    for (int k = 0; k < game->width; k++) {
+      if (game->grid[i][k] == 1) {
+        mvprintw(i, k, "%d", game->grid[i][k]);
+      } else {
+        mvprintw(i, k, ".");
+      }
+    }
+  }
+  refresh();
+}
 
-void cleanup_game(GameState *game) {}
+void cleanup_game(GameState *game) { endwin(); }
