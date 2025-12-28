@@ -1,11 +1,15 @@
 #include "game.h"
 #include <ncurses.h>
 
-void init_game(GameState *game) {
-
+void setup_ncurses() {
+  // initialize ncurses main setings
   initscr();
   nodelay(stdscr, TRUE);
   curs_set(0);
+  noecho();
+}
+
+void init_game(GameState *game) {
 
   // Init the main grid whit 0
   for (int i = 0; i < MAX_HEIGHT; i++) {
@@ -13,8 +17,14 @@ void init_game(GameState *game) {
       game->grid[i][k] = 0;
     }
   }
+  game->grid[0][0] = 1;
 
-  game->grid[1][1] = 1;
+  // initialize basic constants
+  game->height = MAX_HEIGHT;
+  game->width = MAX_WIDTH;
+  game->is_running = TRUE;
+  game->is_paused = FALSE;
+  game->speed = 1000; // This is 1 second
 }
 
 // No input for now

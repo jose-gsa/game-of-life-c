@@ -16,6 +16,7 @@ typedef struct {
   int speed;                            // Simulation speed
 } GameState;
 
+void setup_ncurses();
 void init_game(GameState *game);
 void process_input(GameState *game);
 void update_state(GameState *game);

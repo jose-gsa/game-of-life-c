@@ -5,6 +5,7 @@ int main() {
   GameState game;
 
   // ncurses configuration and variables
+  setup_ncurses();
   init_game(&game);
 
   // Main Game Loop
