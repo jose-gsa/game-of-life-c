@@ -43,19 +43,43 @@ void process_input(GameState *game) {}
 
 void update_state(GameState *game) {
 
-  // Checks if the last positon has been reached
-  if (game->grid[game->height - 1][game->width - 1] == 1) {
-    game->is_running = FALSE;
-    return;
+  // Clean buffer
+  for (int i = 0; i < game->height; i++) {
+    for (int k = 0; k < game->width; k++) {
+      game->next_grid[i][k] = 0;
+    }
   }
 
-  /*
+  // Game rules
+  for (int i = 0; i < game->height; i++) {
+    for (int k = 0; k < game->width; k++) {
+
+      int neighbors = count_neightbors(game, i, k);
+      int is_alive = game->grid[i][k];
+
+      if (is_alive) {
+        // Rules (survival)
+
+        if ((neighbors == 2) || (neighbors == 3)) {
+          game->next_grid[i][k] = 1;
+        }
+      } else { // is dead
+
+        // Rule (reprodution)
+
+        if (neighbors == 3) {
+          game->next_grid[i][k] = 1;
+        }
+      }
+    }
+  }
+
+  // Copy the buffer for the main grid
   for (int i = 0; i < game->height; i++) {
     for (int k = 0; k < game->width; k++) {
       game->grid[i][k] = game->next_grid[i][k];
     }
   }
-  */
 }
 
 void render_game(GameState *game) {
