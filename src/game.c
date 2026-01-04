@@ -1,5 +1,7 @@
 #include "game.h"
 #include <ncurses.h>
+#include <stdlib.h>
+#include <time.h>
 
 static int count_neightbors(GameState *game, int y, int x);
 
@@ -13,13 +15,20 @@ void setup_ncurses() {
 
 void init_game(GameState *game) {
 
+  srand(time(NULL));
+
   // Init the main grid whit 0
   for (int i = 0; i < MAX_HEIGHT; i++) {
     for (int k = 0; k < MAX_WIDTH; k++) {
-      game->grid[i][k] = 0;
+
+      int chance = rand() % 100; // 0 to 99
+      if (chance < 15) {         // 15% spawn rate
+        game->grid[i][k] = 1;
+      } else {
+        game->grid[i][k] = 0;
+      }
     }
   }
-  game->grid[0][0] = 1;
 
   // initialize basic constants
   game->height = MAX_HEIGHT;
