@@ -17,9 +17,19 @@ void init_game(GameState *game) {
 
   srand(time(NULL));
 
+  getmaxyx(stdscr, game->height, game->width);
+
+  game->grid = (int **)malloc(game->height * sizeof(int *));
+  game->next_grid = (int **)malloc(game->height * sizeof(int *));
+
+  for (int i = 0; i < game->height; i++) {
+    game->grid[i] = (int *)malloc(game->width * sizeof(int));
+    game->next_grid[i] = (int *)malloc(game->width * sizeof(int));
+  }
+
   // Init the main grid
-  for (int i = 0; i < MAX_HEIGHT; i++) {
-    for (int k = 0; k < MAX_WIDTH; k++) {
+  for (int i = 0; i < game->height; i++) {
+    for (int k = 0; k < game->width; k++) {
 
       int chance = rand() % 100; // 0 to 99
       if (chance < 15) {         // 15% spawn rate
@@ -31,8 +41,6 @@ void init_game(GameState *game) {
   }
 
   // initialize basic constants
-  game->height = MAX_HEIGHT;
-  game->width = MAX_WIDTH;
   game->is_running = TRUE;
   game->is_paused = FALSE;
   game->speed = 50; // This is for debuging
@@ -97,7 +105,19 @@ void render_game(GameState *game) {
   refresh();
 }
 
-void cleanup_game(GameState *game) { endwin(); }
+void cleanup_game(GameState *game) {
+
+  // Free memory
+  for (int i = 0; i < game->height; i++) {
+    free(game->grid[i]);
+    free(game->next_grid[i]);
+  }
+
+  free(game->grid);
+  free(game->next_grid);
+
+  endwin();
+}
 
 int count_neightbors(GameState *game, int y, int x) {
 

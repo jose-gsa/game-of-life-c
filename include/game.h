@@ -3,17 +3,14 @@
 
 #include <stdbool.h>
 
-#define MAX_HEIGHT 50
-#define MAX_WIDTH 50
-
 typedef struct {
-  int grid[MAX_HEIGHT][MAX_WIDTH];      // Actual grid
-  int next_grid[MAX_HEIGHT][MAX_WIDTH]; // buffer
-  int height;                           // real height of the actual window
-  int width;                            // real width of the actual window
-  bool is_running;                      // Control of the main loop
-  bool is_paused;                       // Pause control
-  int speed;                            // Simulation speed
+  int **grid;      // Actual grid
+  int **next_grid; // buffer
+  int height;      // real height of the actual window
+  int width;       // real width of the actual window
+  bool is_running; // Control of the main loop
+  bool is_paused;  // Pause control
+  int speed;       // Simulation speed
 } GameState;
 
 void setup_ncurses();
