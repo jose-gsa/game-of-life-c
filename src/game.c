@@ -83,12 +83,14 @@ void update_state(GameState *game) {
 }
 
 void render_game(GameState *game) {
+
+  erase();
+
   for (int i = 0; i < game->height; i++) {
     for (int k = 0; k < game->width; k++) {
+
       if (game->grid[i][k] == 1) {
-        mvprintw(i, k, "%d", game->grid[i][k]);
-      } else {
-        mvprintw(i, k, ".");
+        mvaddch(i, k, ACS_CKBOARD | A_BOLD);
       }
     }
   }
