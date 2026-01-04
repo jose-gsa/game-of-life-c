@@ -2,6 +2,7 @@
 #include <ncurses.h>
 
 int main() {
+
   GameState game;
 
   // ncurses configuration and variables

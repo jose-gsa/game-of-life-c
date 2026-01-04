@@ -17,7 +17,7 @@ void init_game(GameState *game) {
 
   srand(time(NULL));
 
-  // Init the main grid whit 0
+  // Init the main grid
   for (int i = 0; i < MAX_HEIGHT; i++) {
     for (int k = 0; k < MAX_WIDTH; k++) {
 
@@ -49,29 +49,13 @@ void update_state(GameState *game) {
     return;
   }
 
-  for (int i = 0; i < game->height; i++) {
-    for (int k = 0; k < game->width; k++) {
-      game->next_grid[i][k] = 0;
-    }
-  }
-
-  for (int y = 0; y < game->height; y++) {
-    for (int x = 0; x < game->width; x++) {
-      if (game->grid[y][x] == 1) {
-        if ((x + 1) < game->width) {
-          game->next_grid[y][x + 1] = 1;
-        } else if (y < game->height - 1) {
-          game->next_grid[y + 1][0] = 1;
-        }
-      }
-    }
-  }
-
+  /*
   for (int i = 0; i < game->height; i++) {
     for (int k = 0; k < game->width; k++) {
       game->grid[i][k] = game->next_grid[i][k];
     }
   }
+  */
 }
 
 void render_game(GameState *game) {
