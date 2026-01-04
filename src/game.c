@@ -1,6 +1,8 @@
 #include "game.h"
 #include <ncurses.h>
 
+static int count_neightbors(GameState *game, int y, int x);
+
 void setup_ncurses() {
   // initialize ncurses main setings
   initscr();
@@ -24,7 +26,7 @@ void init_game(GameState *game) {
   game->width = MAX_WIDTH;
   game->is_running = TRUE;
   game->is_paused = FALSE;
-  game->speed = 10; // This is for debuging
+  game->speed = 50; // This is for debuging
 }
 
 // No input for now
@@ -77,3 +79,25 @@ void render_game(GameState *game) {
 }
 
 void cleanup_game(GameState *game) { endwin(); }
+
+int count_neightbors(GameState *game, int y, int x) {
+
+  int neighbors = 0;
+
+  for (int i = -1; i <= 1; i++) {
+    for (int k = -1; k <= 1; k++) {
+
+      // This will make the game works like pacman and prevent overflows
+      int row = (y + i + game->height) % game->height;
+      int col = (x + k + game->width) % game->width;
+
+      // Sum of the (1 or 0)
+      neighbors += game->grid[row][col];
+    }
+  }
+
+  // Will not count himself
+  neighbors -= game->grid[y][x];
+
+  return neighbors;
+}
